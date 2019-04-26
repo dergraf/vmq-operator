@@ -19,6 +19,13 @@ type StorageSpec struct {
 	VolumeClaimTemplate v1.PersistentVolumeClaim `json:"volumeClaimTemplate,omitempty"`
 }
 
+type VerneMQPluginSpec struct {
+	ApplicationName string `json:"applicationName"`
+	RepoUrl         string `json:"repoUrl"`
+	VersionType     string `json:"versionType"`
+	Version         string `json:"version"`
+}
+
 // VerneMQSpec defines the desired state of VerneMQ
 // +k8s:openapi-gen=true
 type VerneMQSpec struct {
@@ -90,6 +97,8 @@ type VerneMQSpec struct {
 	// Defines additional environment variables for the VerneMQ container
 	// The environment variables can be used to template the VMQConfig and VMArgs
 	Env []v1.EnvVar `json:"env,omitempty"`
+	// Defines external plugins that have to be compiled and loaded into VerneMQ
+	ExternalPlugins []VerneMQPluginSpec `json:"externalPlugins,omitempty"`
 }
 
 // VerneMQStatus defines the observed state of VerneMQ
