@@ -8,24 +8,6 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// StorageSpec defines the configured storage for VerneMQ Cluster nodes.
-// If neither `emptyDir` nor `volumeClaimTemplate` is specified, then by default an [EmptyDir](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir) will be used.
-// +k8s:openapi-gen=true
-type StorageSpec struct {
-	// EmptyDirVolumeSource to be used by the VerneMQ StatefulSets. If specified, used in place of any volumeClaimTemplate. More
-	// info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
-	EmptyDir *v1.EmptyDirVolumeSource `json:"emptyDir,omitempty"`
-	// A PVC spec to be used by the VerneMQ StatefulSets.
-	VolumeClaimTemplate v1.PersistentVolumeClaim `json:"volumeClaimTemplate,omitempty"`
-}
-
-type VerneMQPluginSpec struct {
-	ApplicationName string `json:"applicationName"`
-	RepoUrl         string `json:"repoUrl"`
-	VersionType     string `json:"versionType"`
-	Version         string `json:"version"`
-}
-
 // VerneMQSpec defines the desired state of VerneMQ
 // +k8s:openapi-gen=true
 type VerneMQSpec struct {
@@ -99,6 +81,26 @@ type VerneMQSpec struct {
 	Env []v1.EnvVar `json:"env,omitempty"`
 	// Defines external plugins that have to be compiled and loaded into VerneMQ
 	ExternalPlugins []VerneMQPluginSpec `json:"externalPlugins,omitempty"`
+}
+
+// VerneMQPluginSpec defines the plugins to be fetched, compiled and loaded into the VerneMQ container
+// +k8s:openapi-gen=true
+type VerneMQPluginSpec struct {
+	ApplicationName string `json:"applicationName"`
+	RepoURL         string `json:"repoUrl"`
+	VersionType     string `json:"versionType"`
+	Version         string `json:"version"`
+}
+
+// StorageSpec defines the configured storage for VerneMQ Cluster nodes.
+// If neither `emptyDir` nor `volumeClaimTemplate` is specified, then by default an [EmptyDir](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir) will be used.
+// +k8s:openapi-gen=true
+type StorageSpec struct {
+	// EmptyDirVolumeSource to be used by the VerneMQ StatefulSets. If specified, used in place of any volumeClaimTemplate. More
+	// info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+	EmptyDir *v1.EmptyDirVolumeSource `json:"emptyDir,omitempty"`
+	// A PVC spec to be used by the VerneMQ StatefulSets.
+	VolumeClaimTemplate v1.PersistentVolumeClaim `json:"volumeClaimTemplate,omitempty"`
 }
 
 // VerneMQStatus defines the observed state of VerneMQ
